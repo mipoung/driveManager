@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>DB연동 테스트페이지</title>
+</head>
+<body>
+	<div>
+		<h1>DB연동 테스트</h1>
+		<ul>
+        <!-- 반복문으로 리스트 출력 -->
+        <li th:each="test : ${result}">
+            <!-- test의 프로퍼티를 출력 -->
+            no: <span th:text="${test.no}"></span>,
+            Name: <span th:text="${test.name}"></span>
+        </li>
+    </ul>
+	
+	</div>
+
+</body>
+</html>
