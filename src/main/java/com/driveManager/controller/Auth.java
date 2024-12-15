@@ -4,6 +4,8 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -21,17 +23,19 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 @SessionAttributes("loginUser")
 public class Auth {
 	
-	
 	@ModelAttribute("loginUser") // 이 컨트롤러에서 세션 저장후 사용
     public String populateLoginUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return authentication.getName(); // 현재 사용자의 이름 반환
     }
 	
+	// 로그인 화면으로 가기(GET)
     @GetMapping("/login")
     public String login() {
         return "login";
     }
+    
+    
     
     @GetMapping("/login-error")
     public String loginError(Model model) {

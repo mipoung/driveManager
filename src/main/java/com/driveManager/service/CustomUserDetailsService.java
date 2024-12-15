@@ -11,7 +11,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 
-import com.driveManager.vo.UserDTO;
+import com.driveManager.vo.User;
 import com.driveManager.mapper.UserMapper;
 
 public class CustomUserDetailsService implements UserDetailsService {
@@ -29,12 +29,12 @@ public class CustomUserDetailsService implements UserDetailsService {
 //    }
     
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String userId) throws UsernameNotFoundException {
         // DB에서 사용자 정보 가져오기
-        UserDTO user = userMapper.findByUsername(username);
+        User user = userMapper.findByUsername(userId);
 
         if (user == null) {
-            throw new UsernameNotFoundException("User not found with username: " + username);
+            throw new UsernameNotFoundException("User not found with username: " + userId);
         }
         
 

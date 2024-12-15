@@ -16,7 +16,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
-import com.driveManager.vo.UserDTO;
+import com.driveManager.vo.User;
 import com.driveManager.mapper.UserMapper;
 import com.driveManager.service.CustomUserDetails;
 
@@ -42,7 +42,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorize -> authorize
                                 .requestMatchers("/login", "/error").permitAll()
                              //   .requestMatchers("/").permitAll()
-                                .requestMatchers("/js/common/**", "/css/common/**", "/images/**", "/userInsertVw", "/userNameDupChk", "/userInsert", "/dbTest", "/").permitAll()
+                                .requestMatchers("/js/common/**", "/css/common/**", "/images/**", "/userInsertVw", "/userNameDupChk", "/userInsert", "/").permitAll()
                                 .requestMatchers("/admin/**").hasRole("ADMIN")
                                 .requestMatchers("/devHistory").hasRole("ADMIN") // USER 권한 필요
                                 //.requestMatchers("/user/**").hasAnyRole("USER", "ADMIN")
@@ -88,7 +88,7 @@ public class SecurityConfig {
     public UserDetailsService userDetailsService(UserMapper userMapper) {
         return username -> {
             // 사용자 정보를 DB에서 가져옴
-            UserDTO user = userMapper.findByUsername(username);
+            User user = userMapper.findByUsername(username);
             if (user == null) {
                 throw new UsernameNotFoundException("User not found with username: " + username);
             }

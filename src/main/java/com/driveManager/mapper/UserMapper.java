@@ -7,30 +7,25 @@ import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
-import com.driveManager.vo.UserDTO;
+import com.driveManager.vo.User;
 
 @Mapper
 public interface UserMapper {
-    @Select("SELECT * FROM USER WHERE USERNAME = #{username}")
-    UserDTO findByUsername(String username);
-    
-    @Select("SELECT COUNT(*) FROM USER WHERE USERNAME = #{username}")
-    int userNameDupChk(Map<String, Object> params);
-    
-    @Insert("INSERT INTO USER(USERNAME, PASSWORD, EMAIL) VALUES(LOWER(#{username}), #{password}, #{email})")
-    int userInsert(Map<String, Object> params);
+	@Select("SELECT * FROM users WHERE user_name = LOWER(#{userName})")
+	User findByUsername(String userName);
 
-    @Insert("INSERT INTO USER_QUESTION_LIMIT(USER_NO, ANSWERS_COUNT) VALUES(#{userNo}, #{answersCount})")
-	int userInsertCoin(Map<String, Object> params);
-    
-//    @Insert("INSERT INTO AUTHORITIES (USER_NO, AUTHORITY) VALUES (#{userNo}, #{authority})")
-//    int insertAuthority(@Param("userNo") String userNo, @Param("authority") String authority);
-    
-    @Insert("INSERT INTO AUTHORITIES (USER_NO, AUTHORITY) VALUES (#{userNo}, #{authority})")
-    int insertAuthority(Map<String, Object> params);
-    
-    @Select("SELECT AUTHORITY FROM AUTHORITIES WHERE USER_NO = #{userNo}")
-    List<String> findAuthoritiesByUserNo(String userNo);
+	@Select("SELECT COUNT(*) FROM users WHERE user_name = LOWER(#{userName})")
+	int userNameDupChk(Map<String, Object> params);
+
+	@Insert("INSERT INTO users(user_name, password, email) VALUES(LOWER(#{userName}), #{password}, #{email})")
+	int userInsert(Map<String, Object> params);
+
+	@Insert("INSERT INTO authorities(user_no, authority) VALUES(#{userNo}, #{authority})")
+	int insertAuthority(Map<String, Object> params);
+
+	@Select("SELECT authority FROM authorities WHERE user_no = #{userNo}")
+	List<String> findAuthoritiesByUserNo(Integer userNo);
+
 
 }
 
